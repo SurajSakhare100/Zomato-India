@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webcam Image Capture</title>
+</head>
+<style>
+     .container{
+        width: 90%;
+        height: 100vh;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    h1{
+        text-align: center;
+    }
+    #videoElement{
+        width: 100%;
+        flex-shrink: 0;
+    }
+    #canvasElement{
+        width: 100%;
+     flex-shrink: 0;
+    }
+    @media only screen and (min-width: 1000px) {
+        #videoElement{
+        width: 40%;
+        flex-shrink: 0;
+    }
+    .container{
+        justify-content: space-between;
+    }
+    #canvasElement{
+        width: 40%;
+        flex-shrink: 0;
+
+    }
+    #captureButton{
+        align-self: center;
+        flex-shrink: 0;
+    }
+    .box{
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+    }
+    
+</style>
+<body>
+    <div class="container">
+
+        <h1>Webcam Image Capture</h1>
+        <div class="box">
+            <video id="videoElement" autoplay></video>
+            <canvas id="canvasElement" ></canvas>
+        </div>
+        <button id="captureButton">Capture Image</button>
+    </div>
+
+    <script >
+        document.addEventListener('DOMContentLoaded', function () {
+    var video = document.getElementById('videoElement');
+    var canvas = document.getElementById('canvasElement');
+    var captureButton = document.getElementById('captureButton');
+
+    if (navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+                video.srcObject = stream;
+            })
+            .catch(function (error) {
+                console.error('Error accessing the webcam:', error);
+            });
+
+        captureButton.addEventListener('click', function () {
+            var context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Convert canvas to base64 data URL
+            var imageData = canvas.toDataURL('image/jpeg');
+
+            // Send imageData to server using AJAX or other method
+            // Example: Send imageData to server using fetch API
+            fetch('/save_image', {
+                method: 'POST',
+                body: JSON.stringify({ image_data: imageData }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(function (response) {
+                if (response.ok) {
+                    console.log('Image saved successfully!');
+                } else {
+                    console.error('Error saving image:', response.statusText);
+                }
+            })
+            .catch(function (error) {
+                console.error('Error saving image:', error);
+            });
+        });
+    } else {
+        console.error('getUserMedia not supported on your browser!');
+    }
+});
+
+    </script>
+</body>
+</html>
