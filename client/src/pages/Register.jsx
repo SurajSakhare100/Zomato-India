@@ -1,31 +1,33 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios'
 function Login() {
-    const [username,setUsername]=useState('');
-    const [email,setEmail]=useState('');
-    const [password,setPassword]=useState('');
-    const [avatar,setAvatar]=useState('');
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post('/api/v1/auth/register', {
-                username,
-                email,
-                password,
-                avatar
-            }, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            console.log(response);
-        } catch (error) {
-            console.log(error.message);
-        }
-    };
-    console.log(avatar)
-    return (
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [avatar, setAvatar] = useState('');
+  const navigate = useNavigate();
+  const handleFileChange = (e) => {
+    setAvatar(e.target.files[0]);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('avatar', avatar);
+    formData.append('username', username);
+    formData.append('email', email);
+    formData.append('password', password);
+    try {
+      const response = await axios.post('/api/v1/auth/register', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },});
+      navigate('/login');
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -51,7 +53,7 @@ function Login() {
                   type="username"
                   autoComplete="username"
                   required
-                  onChange={(e)=>setUsername(e.target.value)}
+                  onChange={(e) => setUsername(e.target.value)}
                   placeholder="John Dev"
                   className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -73,7 +75,7 @@ function Login() {
                   autoComplete="email"
                   required
                   placeholder="john123@gmail.com"
-                  onChange={(e)=>setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -89,7 +91,7 @@ function Login() {
                 </label>
                 <div className="text-sm">
                   <Link
-                    to={"/register"}
+                    to={"/updatepassword"}
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                   >
                     Forgot password?
@@ -104,7 +106,7 @@ function Login() {
                   autoComplete="current-password"
                   required
                   placeholder="******"
-                  onChange={(e)=>setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -122,7 +124,7 @@ function Login() {
                   name="avatar"
                   type="file"
                   required
-                  onChange={(e)=>setAvatar(e.target.value)}
+                  onChange={handleFileChange}
                   className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -133,7 +135,7 @@ function Login() {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-               register
+                register
               </button>
             </div>
             <div>
@@ -142,7 +144,7 @@ function Login() {
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-          Already have an account? {" "}
+            Already have an account? {" "}
             <Link
               to={"/login"}
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"

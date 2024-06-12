@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import App from './App';
 import LandingPage from './pages/LandingPage';
+import UpdatePassword from './pages/UpdatePassword';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: '/register',
         element: <Register/>,
+      },
+      {
+        path: '/updatepassword',
+        element: <UpdatePassword/>,
       },
     ],
   },
