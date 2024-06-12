@@ -5,13 +5,15 @@ function Login() {
     const [username,setUsername]=useState('');
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
+    const [avatar,setAvatar]=useState('');
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/api/auth/register', {
+            const response = await axios.post('/api/v1/auth/register', {
                 username,
                 email,
-                password
+                password,
+                avatar
             }, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -22,6 +24,7 @@ function Login() {
             console.log(error.message);
         }
     };
+    console.log(avatar)
     return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -39,7 +42,7 @@ function Login() {
                 htmlFor="username"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                username
+                Full Name
               </label>
               <div className="mt-2">
                 <input
@@ -49,6 +52,7 @@ function Login() {
                   autoComplete="username"
                   required
                   onChange={(e)=>setUsername(e.target.value)}
+                  placeholder="John Dev"
                   className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -68,6 +72,7 @@ function Login() {
                   type="email"
                   autoComplete="email"
                   required
+                  placeholder="john123@gmail.com"
                   onChange={(e)=>setEmail(e.target.value)}
                   className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -83,12 +88,12 @@ function Login() {
                   Password
                 </label>
                 <div className="text-sm">
-                  <a
-                    href="#"
+                  <Link
+                    to={"/register"}
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                   >
                     Forgot password?
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="mt-2">
@@ -98,7 +103,26 @@ function Login() {
                   type="password"
                   autoComplete="current-password"
                   required
+                  placeholder="******"
                   onChange={(e)=>setPassword(e.target.value)}
+                  className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Add Avatar
+              </label>
+              <div className="mt-2">
+                <input
+                  id="avatar"
+                  name="avatar"
+                  type="file"
+                  required
+                  onChange={(e)=>setAvatar(e.target.value)}
                   className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -112,10 +136,13 @@ function Login() {
                register
               </button>
             </div>
+            <div>
+
+            </div>
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-            Not Log In yet ? {""}
+          Already have an account? {" "}
             <Link
               to={"/login"}
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
