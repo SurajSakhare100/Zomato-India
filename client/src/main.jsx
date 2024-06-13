@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import App from './App';
 import LandingPage from './pages/LandingPage';
 import UpdatePassword from './pages/UpdatePassword';
+import Adminpage from './pages/Adminpage';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: '/updatepassword',
         element: <UpdatePassword/>,
+      },
+      {
+        path: '/admin/:id',
+        element: <Adminpage/>,
       },
     ],
   },

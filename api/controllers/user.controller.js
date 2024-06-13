@@ -1,5 +1,4 @@
 // user.controller.js
-import bcrypt from "bcryptjs";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import User from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
@@ -195,4 +194,4 @@ export {
   logoutUser,
   changeCurrentPassword,
   getCurrentUser
- };
+ }
