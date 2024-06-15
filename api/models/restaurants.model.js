@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const RestraurantSchema= new Schema(
+const RestaurantSchema= new Schema(
     {
         username:{
             type: String, 
@@ -33,6 +33,6 @@ const RestraurantSchema= new Schema(
     }
 );
 
-const Restraurant = mongoose.model("Restraurant", RestraurantSchema);
+const Restaurant = mongoose.model("Restaurant", RestaurantSchema);
 
-export default Restraurant;
+export default Restaurant;

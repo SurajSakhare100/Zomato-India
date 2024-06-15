@@ -20,6 +20,8 @@ export default function Navbar() {
     try {
       await axios.get("/api/v1/auth/getuser").then((res) => {
         setUser(res.data.data.username)
+      }).catch((error)=>{
+        console.log(error.message)
       })
       setIslogin(true)
     } catch (error) {
