@@ -7,6 +7,8 @@ import App from './App';
 import LandingPage from './pages/LandingPage';
 import UpdatePassword from './pages/UpdatePassword';
 import Restaurant from '../src/pages/RestaurantPage';
+import Dish from '../src/pages/DishPage';
+import Adminpage from './pages/Adminpage';
 
 const router = createBrowserRouter([
   {
@@ -23,16 +25,25 @@ const router = createBrowserRouter([
       },
       {
         path: '/register',
-        element: <Register/>,
+        element: <Register />,
       },
       {
         path: '/restaurants/:id',
-        element: <Restaurant/>,
+        element: <Restaurant />,
+      },
+      {
+        path: '/dish/:id',
+        element: <Dish />,
       },
       {
         path: '/updatepassword',
-        element: <UpdatePassword/>,
+        element: <UpdatePassword />,
       },
+      {
+        path: "/admin",
+        element: <Adminpage />
+
+      }
     ],
   },
 ]);

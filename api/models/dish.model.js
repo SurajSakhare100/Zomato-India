@@ -2,13 +2,13 @@ import mongoose, { Schema } from "mongoose";
 
 const DishSchema = new Schema(
   {
-    name: {
+    dishname: {
       type: String,
       required: true,
     },
     dish_image: {
-      type: Boolean,
-      default: true,
+      type: String,
+      required: true,
     },
     price: {
       type: Number,

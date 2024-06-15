@@ -77,14 +77,8 @@ const getAllRestaurants = asyncHandler(async (req, res) => {
   try {
     const restaurants = await Restaurant.find();
     return res
-        .status(201)
-        .json(
-          new ApiResponse(
-            200,
-            restaurants,
-            "Restaurant get successfully"
-          )
-        );
+      .status(201)
+      .json(new ApiResponse(200, restaurants, "Restaurant get successfully"));
   } catch (error) {
     if (error instanceof ApiError) {
       res.status(error.statusCode).json({ error: error.message });
@@ -103,11 +97,7 @@ const getRestaurant = asyncHandler(async (req, res) => {
     return res
       .status(200) // 200 status code for successful retrieval
       .json(
-        new ApiResponse(
-          200,
-          restaurant,
-          "Restaurant retrieved successfully"
-        )
+        new ApiResponse(200, restaurant, "Restaurant retrieved successfully")
       );
   } catch (error) {
     if (error instanceof ApiError) {
@@ -121,7 +111,6 @@ const getRestaurant = asyncHandler(async (req, res) => {
 const updateRestaurant = asyncHandler(async (req, res) => {
   try {
     const { username, name, email, address, ratings, description } = req.body;
-    
 
     const updatedRestaurant = await Restaurant.findOneAndUpdate(
       { username: username.toLowerCase() }, // Correct query format
@@ -157,5 +146,41 @@ const updateRestaurant = asyncHandler(async (req, res) => {
   }
 });
 
+const addDishes = asyncHandler(async (req, res) => {
+ try {
+   const { dishes } = req.body;
+   const updatedRestaurant=await Restaurant.findByIdAndUpdate(
+     '666d5c22b50c4308a8d7d8cb',
+     {$set: {
+       dishes: dishes,
+     }
+     },
+     {
+       new: true,
+     }
+   );
+   return res
+      .status(200) // 200 status code for a successful update
+      .json(
+        new ApiResponse(
+          200,
+          updatedRestaurant,
+          "Restaurant updated successfully"
+        )
+      );
+ } catch (error) {
+  if (error instanceof ApiError) {
+    res.status(error.statusCode).json({ error: error.message });
+  } else {
+    res.status(500).json({ error: "Internal server error" });
+  }
+ }
+});
 
-export { registerRestaurant, getAllRestaurants, updateRestaurant ,getRestaurant};
+export {
+  registerRestaurant,
+  getAllRestaurants,
+  updateRestaurant,
+  getRestaurant,
+  addDishes,
+};

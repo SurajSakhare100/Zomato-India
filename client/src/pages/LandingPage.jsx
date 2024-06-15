@@ -16,8 +16,40 @@ function LandingPage() {
   useEffect(() => {
     getRestaurants()
   }, [setRestaurants])
+
+  const [dishes, setDishes] = useState(null)
+  const getDishes = async () => {
+    try {
+      await axios.get('/api/v1/Dish/getalldishes')
+        .then((res) => { setDishes(res.data.data) })
+        .catch((err) => { console.log(err) })
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  useEffect(() => {
+    getDishes()
+  }, [setRestaurants])
   return (
     <div>
+      <div className="flex flex-col w-3/4 mx-auto mb-10 ">
+        <h1 className="text-4xl px-4 my-6">Dishes</h1>
+        <div className="flex w-full h-auto flex-wrap gap-12 justify-center items-center">
+          {
+            dishes?dishes.map((dish, index) => {
+             return (
+               <div key={dish._id} className="flex flex-col p-4 rounded-xl ">
+                  <Link to={`/dish/${dish._id}`}>
+                  <img src={dish.dish_image} alt={dish.name} className="rounded-full w-40" />
+                  
+                  <h4 className="text-md text-center">{dish.dishname}</h4>
+                </Link>
+                </div>
+              )
+}):<>hello</>
+          }
+        </div>
+      </div>
       <div className="flex flex-col w-3/4 mx-auto mb-10 ">
         <h1 className="text-4xl px-4 my-6">Restaurants</h1>
         <div className="flex w-full h-auto flex-wrap gap-12 justify-center items-center">

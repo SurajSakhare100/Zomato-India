@@ -26,7 +26,11 @@ const RestaurantSchema= new Schema(
         restaurant_image:{
             type:String,
             required:true
-        }
+        },
+        dishes:[{
+            type: Schema.Types.ObjectId,
+            required: true
+          }]
     },
     {
         timestamps: true,

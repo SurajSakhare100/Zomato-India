@@ -1,29 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios'
+import { getDishes } from "..";
 function Adminpage() {
+    const [dishes, setDishes] = useState(null);
+    useEffect(()=>{
+       const api= getDishes();
+       api.then(
+        (res)=>{
+            setDishes(res.data.data)
+        }
+       )
+    },[]);
     const [dishname, setDishname] = useState('');
-    const [description, setDescription] = useState('');
-    const [price, setPrice] = useState('');
-    const [dishimage, setDishimage] = useState('');
-    const handleFileChange = (e) => {
-      setDishimage(e.target.files[0]);
-    };
+    const arrayOfDishes=[];
     const handleSubmit = async (e) => {
-      e.preventDefault();
-      const formData = new FormData();
-      formData.append('dishname', dishname);
-      formData.append('dishimage', dishimage);
-      formData.append('description', description);
-      formData.append('price', price);
-      try {
-        const response = await axios.post('/api/v1/admin/adddish', {dishname,dishimage,description,price}, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },});
-      } catch (error) {
-        console.log(error.message);
-      }
+        e.preventDefault();
+        try {
+            const result=dishes.filter((dish)=>dish.dishname===dishname)
+            arrayOfDishes.push(result[0]._id)
+            console.log(arrayOfDishes)
+            const response = await axios.post('/api/v1/restaurant/addDishes', arrayOfDishes, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            console.log(response)
+        } catch (error) {
+            console.log(error.message);
+        }
     };
     console.log(dishname)
     return (
@@ -46,7 +51,7 @@ function Adminpage() {
                                 Dish Name
                             </label>
                             <div className="mt-2">
-                                <input
+                                <select
                                     id="dishname"
                                     name="dishname"
                                     type="text"
@@ -54,29 +59,14 @@ function Adminpage() {
                                     required
                                     onChange={(e) => setDishname(e.target.value)}
                                     placeholder="Gulabjamun"
-                                    className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label
-                                htmlFor="description"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                description
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="description"
-                                    name="description"
-                                    type="text"
-                                    autoComplete="description"
-                                    required
-                                    placeholder="it is very delisisus"
-                                    onChange={(e) => setDescription(e.target.value)}
-                                    className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                />
+                                    className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+                                >
+                                   {
+                                   dishes?.map((dish)=>((
+                                    <option key={dish._id}>{dish.dishname}</option>
+                                   )))
+                                   }
+                                </select>
                             </div>
                         </div>
 
@@ -88,7 +78,7 @@ function Adminpage() {
                                 >
                                     price
                                 </label>
-                               
+
                             </div>
                             <div className="mt-2">
                                 <input
@@ -99,25 +89,7 @@ function Adminpage() {
                                     required
                                     placeholder="10$"
                                     onChange={(e) => setPrice(e.target.value)}
-                                    className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
-                        <div>
-                            <label
-                                htmlFor="description"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                Add your dish image
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="dishimage"
-                                    name="dishimage"
-                                    type="file"
-                                    required
-                                    onChange={handleFileChange}
-                                    className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                                    className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
