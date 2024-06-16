@@ -3,6 +3,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import Dish from "../models/dish.model.js";
 import { uploadOnCloudinary } from "../utils/cloudnary.js";
+// import mongoose from "mongoose";
 
 const addDish = asyncHandler(async (req, res) => {
   try {
@@ -130,10 +131,32 @@ const getDishName=asyncHandler(async(req,res)=>{
       }
     }
 })
-
+const getDishesOfRestaurant=asyncHandler(async(req,res)=>{
+ try {
+  const ids=req.query.ids;
+   const dishes=await Dish.find({_id:{$in:ids}})
+   return res
+         .status(201)
+         .json(
+           new ApiResponse(
+             200,
+             dishes,
+             "Dishes get successfully"
+           )
+         );
+ } catch (error) {
+  
+  if (error instanceof ApiError) {
+    res.status(error.statusCode).json({ error: error.message });
+  } else {
+    res.status(500).json({ error: "Internal server error" });
+  }
+ }
+})
 export { 
   addDish,
   getAllDishes,
   getDish,
-  getDishName
+  getDishName,
+  getDishesOfRestaurant
  };
