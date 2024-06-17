@@ -1,13 +1,17 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-
+import { addDish } from '../features/dish/dishSlice';
+import {  useDispatch, useSelector} from "react-redux"
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const item =useSelector((state)=>state.dishes)
     const navigate = useNavigate();
+    const dispatch=useDispatch()
     const handleSubmit = async (e) => {
         e.preventDefault();
+        dispatch(addDish({email,password}))
         try {
           const response = await axios.post('/api/v1/auth/login',{ email,password}, {
             headers: {
