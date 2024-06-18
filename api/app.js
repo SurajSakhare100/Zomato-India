@@ -5,9 +5,9 @@ import authRoute from './routes/auth.route.js'
 import dishRoute from './routes/dish.route.js'
 import restaurantsRoute from './routes/restaurants.route.js'
 const app = express()
-
+const origin=process.env.ORIGIN;
 app.use(cors({
-    origin:'https://zomatoindia.vercel.app/',
+    origin,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
