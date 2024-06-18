@@ -1,9 +1,10 @@
 import axios from "axios";
 
-export  const url = import.meta.env.VITE_URL;
+export const url = import.meta.env.VITE_URL;
+
 // export const url = 'https://zomato-india.onrender.com'
 const axiosInstance = axios.create({
-  baseURL: url,
+
   headers: {
     "Content-Type": "application/json",
   },
@@ -16,7 +17,7 @@ const handleError = (err) => {
 
 export const getDishesOfRestaurant = async (ids) => {
   try {
-    const response = await axiosInstance.get(
+    const response = await axiosInstance.get(url+
       "/api/v1/Dish/getdishesofrestaurant",
       { params: { ids } }
     );
@@ -28,7 +29,7 @@ export const getDishesOfRestaurant = async (ids) => {
 
 export const getRestaurants = async () => {
   try {
-    const response = await axiosInstance.get(
+    const response = await axiosInstance.get(url+
       "/api/v1/restaurant/getallrestaurants"
     );
     return handleResponse(response);
@@ -39,7 +40,7 @@ export const getRestaurants = async () => {
 
 export const getAllDishes = async () => {
   try {
-    const response = await axiosInstance.get("/api/v1/Dish/getalldishes");
+    const response = await axiosInstance.get(url+"/api/v1/Dish/getalldishes");
     return handleResponse(response);
   } catch (error) {
     return handleError(error);
@@ -48,7 +49,7 @@ export const getAllDishes = async () => {
 
 export const getRestaurant = async (id) => {
   try {
-    const response = await axiosInstance.get(
+    const response = await axiosInstance.get(url+
       `/api/v1/restaurant/getrestaurant/${id}`
     );
     return handleResponse(response);
@@ -59,7 +60,7 @@ export const getRestaurant = async (id) => {
 
 export const getdish = async (id) => {
   try {
-    const response = await axiosInstance.get(`/api/v1/dish/getdish/${id}`);
+    const response = await axiosInstance.get(url+`/api/v1/dish/getdish/${id}`);
     return handleResponse(response);
   } catch (error) {
     console.log(error.message);
