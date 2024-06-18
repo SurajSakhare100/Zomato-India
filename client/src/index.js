@@ -1,8 +1,7 @@
 import axios from "axios";
 
-export const url = import.meta.env.VITE_URL;
 
-// export const url = 'https://zomato-india.onrender.com'
+export const url = 'https://zomato-india.onrender.com'
 const axiosInstance = axios.create({
 
   headers: {
