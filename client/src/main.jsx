@@ -8,7 +8,6 @@ import LandingPage from './pages/LandingPage';
 import UpdatePassword from './pages/UpdatePassword';
 import Restaurant from '../src/pages/RestaurantPage';
 import Dish from '../src/pages/DishPage';
-import Adminpage from './pages/Adminpage';
 
 const router = createBrowserRouter([
   {
@@ -38,10 +37,6 @@ const router = createBrowserRouter([
       {
         path: '/updatepassword',
         element: <UpdatePassword />,
-      },
-      {
-        path: "/admin",
-        element: <Adminpage />
 
       }
     ],

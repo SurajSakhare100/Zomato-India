@@ -1,36 +1,26 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { getAllDishes, getRestaurants } from "..";
 function LandingPage() {
   const [restaurants, setRestaurants] = useState(null)
-  const url='https://zomato-india.onrender.com'
-  const getRestaurants = async () => {
-    try {
-      await axios.get(url+'/api/v1/restaurant/getallrestaurants')
-        .then((res) => { setRestaurants(res.data.data) })
-        .catch((err) => { console.log(err.message) })
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  const [dishes, setDishes] = useState(null)
+  
   useEffect(() => {
-    getRestaurants()
+    const fetchData=async()=>{
+      const data= await getRestaurants()
+      setRestaurants(data)
+    }
+    fetchData()
   }, [setRestaurants])
 
-  const [dishes, setDishes] = useState(null)
-  const getDishes = async () => {
-    try {
-      await axios.get('url+/api/v1/Dish/getalldishes')
-        .then((res) => { setDishes(res.data.data) })
-        .catch((err) => { console.log(err) })
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
   useEffect(() => {
-    getDishes()
-  }, [setRestaurants])
+    const fetchData=async()=>{
+      const data= await getAllDishes()
+      setDishes(data)
+    }
+    fetchData()
+  }, [setDishes])
   return (
     <div>
       <div className="flex flex-col w-full px-4 sm:w-3/4 mx-auto mb-10 ">
@@ -71,7 +61,7 @@ function LandingPage() {
                 </Link>
                 </div>
               )
-}):<>hello</>
+}):<>restaurants</>
           }
         </div>
       </div>

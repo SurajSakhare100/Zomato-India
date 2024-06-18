@@ -1,24 +1,69 @@
 import axios from "axios";
 
-export const getDishes = async () => {
-    try {
-     const response= await axios.get('/api/v1/Dish/getalldishes')
-       return response
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+export const url = import.meta.env.VITE_URL;
+
+const axiosInstance = axios.create({
+  baseURL: url,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+const handleResponse = (res) => res.data.data;
+const handleError = (err) => {
+  console.error(err.message);
+  return null;
+};
+
 export const getDishesOfRestaurant = async (ids) => {
-  // console.log(ids)
-    try {
-     const response=await axios.get('/api/v1/Dish/getdishesofrestaurant',{
-      params: { ids},
-      // ids:{ids}
-    }
-  )
-  return response.data.data
-      
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  try {
+    const response = await axiosInstance.get(
+      "/api/v1/Dish/getdishesofrestaurant",
+      { params: { ids } }
+    );
+    return handleResponse(response);
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const getRestaurants = async () => {
+  try {
+    const response = await axiosInstance.get(
+      "/api/v1/restaurant/getallrestaurants"
+    );
+    return handleResponse(response);
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const getAllDishes = async () => {
+  try {
+    const response = await axiosInstance.get("/api/v1/Dish/getalldishes");
+    return handleResponse(response);
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const getRestaurant = async (id) => {
+  try {
+    const response = await axiosInstance.get(
+      `/api/v1/restaurant/getrestaurant/${id}`
+    );
+    return handleResponse(response);
+  } catch (error) {
+    return handleError(error);
+  }
+};
+
+export const getdish = async (id) => {
+  try {
+    const response = await axiosInstance.get(`/api/v1/dish/getdish/${id}`);
+    return handleResponse(response);
+  } catch (error) {
+    console.log(error.message);
+    return null;
+  }
+};

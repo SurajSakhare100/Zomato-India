@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { url } from "../..";
 
 export default function Navbar() {
   const [islogin, setIslogin] = useState(false)
@@ -8,7 +9,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const logout = async () => {
     try {
-      const response = await axios.post("/api/v1/auth/logout").then((res) => {
+      const response = await axios.post(url+"/api/v1/auth/logout").then((res) => {
         setUser(null);
         navigate('/login');
       })
@@ -18,7 +19,7 @@ export default function Navbar() {
   };
   async function fetchData() {
     try {
-      await axios.get("/api/v1/auth/getuser").then((res) => {
+      await axios.get(url+"/api/v1/auth/getuser").then((res) => {
         setUser(res.data.data.username)
       }).catch((error)=>{
         console.log(error.message)

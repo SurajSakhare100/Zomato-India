@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { url } from '..';
 
 function UpdatePassword() {
     const [oldPassword, setOldPassword] = useState('');
@@ -8,7 +9,7 @@ function UpdatePassword() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const response = await axios.post('/api/v1/auth/updatepassword',
+          const response = await axios.post(url+'/api/v1/auth/updatepassword',
             { oldPassword,newPassword},
              {
             headers: {

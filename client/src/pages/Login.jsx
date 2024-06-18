@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { addDish } from '../features/dish/dishSlice';
 import {  useDispatch, useSelector} from "react-redux"
+import { url } from '..';
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -13,7 +14,7 @@ function Login() {
         e.preventDefault();
         dispatch(addDish({email,password}))
         try {
-          const response = await axios.post('/api/v1/auth/login',{ email,password}, {
+          const response = await axios.post(url+'/api/v1/auth/login',{ email,password}, {
             headers: {
               'Content-Type': 'application/json',
             },});

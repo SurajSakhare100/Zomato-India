@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios'
+import { url } from "..";
 function Register() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -18,7 +19,7 @@ function Register() {
     formData.append('email', email);
     formData.append('password', password);
     try {
-      const response = await axios.post('/api/v1/auth/register', formData, {
+      const response = await axios.post(url+'/api/v1/auth/register', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },});
