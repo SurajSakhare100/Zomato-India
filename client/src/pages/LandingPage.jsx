@@ -4,9 +4,10 @@ import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
 function LandingPage() {
   const [restaurants, setRestaurants] = useState(null)
+  const url='https://zomato-india.onrender.com'
   const getRestaurants = async () => {
     try {
-      await axios.get('/api/v1/restaurant/getallrestaurants')
+      await axios.get(url+'/api/v1/restaurant/getallrestaurants')
         .then((res) => { setRestaurants(res.data.data) })
         .catch((err) => { console.log(err) })
     } catch (error) {
