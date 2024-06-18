@@ -1,14 +1,13 @@
 import axios from "axios";
 
-export const url = import.meta.env.VITE_URL;
-
+// const url = import.meta.env.VITE_URL;
+const url = 'https://zomato-india.onrender.com'
 const axiosInstance = axios.create({
   baseURL: url,
   headers: {
     "Content-Type": "application/json",
   },
 });
-
 const handleResponse = (res) => res.data.data;
 const handleError = (err) => {
   console.error(err.message);
