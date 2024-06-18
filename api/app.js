@@ -7,7 +7,7 @@ import restaurantsRoute from './routes/restaurants.route.js'
 const app = express()
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://zomato-india.onrender.com',
     credentials: true,
 }))
 app.use(express.json())
