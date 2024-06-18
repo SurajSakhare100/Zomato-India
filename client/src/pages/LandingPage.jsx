@@ -9,7 +9,7 @@ function LandingPage() {
     try {
       await axios.get(url+'/api/v1/restaurant/getallrestaurants')
         .then((res) => { setRestaurants(res.data.data) })
-        .catch((err) => { console.log(err) })
+        .catch((err) => { console.log(err.message) })
     } catch (error) {
       console.log(error.message);
     }
@@ -21,7 +21,7 @@ function LandingPage() {
   const [dishes, setDishes] = useState(null)
   const getDishes = async () => {
     try {
-      await axios.get('/api/v1/Dish/getalldishes')
+      await axios.get('url+/api/v1/Dish/getalldishes')
         .then((res) => { setDishes(res.data.data) })
         .catch((err) => { console.log(err) })
     } catch (error) {
