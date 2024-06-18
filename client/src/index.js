@@ -1,9 +1,9 @@
 import axios from "axios";
 
 // const url = import.meta.env.VITE_URL;
-const url = 'https://zomato-india.onrender.com'
+export const url = 'https://zomato-india.onrender.com'
 const axiosInstance = axios.create({
-  baseURL: url,
+  // baseURL: url,
   headers: {
     "Content-Type": "application/json",
   },
@@ -39,7 +39,7 @@ export const getRestaurants = async () => {
 
 export const getAllDishes = async () => {
   try {
-    const response = await axiosInstance.get("/api/v1/Dish/getalldishes");
+    const response = await axiosInstance.get(url+"/api/v1/Dish/getalldishes");
     return handleResponse(response);
   } catch (error) {
     return handleError(error);
