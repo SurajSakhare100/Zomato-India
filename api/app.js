@@ -6,10 +6,11 @@ import dishRoute from './routes/dish.route.js';
 import restaurantsRoute from './routes/restaurants.route.js';
 
 const app = express();
-
-// Apply CORS middleware
+const origin=process.env.ORIGIN_LOCAL;
+console.log(origin)
 app.use(cors({
-  origin: 'https://zomatoindia.vercel.app',
+  origin: '*',
+  // origin: 'https://zomatoindia.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -35,5 +36,7 @@ app.use((err, req, res, next) => {
     error: err
   });
 });
-
+app.get('/',(req,res)=>{
+res.send('hello')
+})
 export { app };

@@ -1,7 +1,8 @@
 import axios from "axios";
 
 
-export const url = 'https://zomato-india.onrender.com'
+export const url = 'http://localhost:3000'
+// export const url = 'https://zomato-india.onrender.com'
 const axiosInstance = axios.create({
 
   headers: {
