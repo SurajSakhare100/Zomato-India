@@ -7,7 +7,7 @@ import restaurantsRoute from './routes/restaurants.route.js';
 
 const app = express();
 const origin=process.env.ORIGIN_LOCAL;
-console.log(origin)
+// console.log(origin)
 app.use(cors({
   origin: '*',
   // origin: 'https://zomatoindia.vercel.app',
